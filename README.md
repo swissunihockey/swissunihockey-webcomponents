@@ -1,6 +1,6 @@
 # Einbetten der Web Component auf einem Webseite
 ## JavaScript und CSS files auf Webserver hochladen.
-Als erstes muss man die beiden Files "swissunihockey-webcomponents.js" und "swissunihockey-webcomponents.css" in das Dateiverzeichniss vom Webserver hochladen.
+Als erstes muss man die beiden Files "swissunihockey-webcomponents.js" und "swissunihockey-webcomponents.css" in das Dateiverzeichniss vom Webserver hochladen. Diese beiden Dateien befinden sich direkt in diesem Projekt.
 Der Ordner, wo die Dateien hochgeladen werden, muss von den Webseiten anziehbar sein.
 Als Beispiel kann man in einer Wordpress Webseite die beiden Dateien in der Mediathek hochladen.
 ![img.png](img.png)
