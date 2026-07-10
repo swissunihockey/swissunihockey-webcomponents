@@ -1,30 +1,62 @@
-# Einbetten der Web Component auf einem Webseite
-## JavaScript und CSS files auf Webserver hochladen.
-Als erstes muss man die beiden Files "swissunihockey-webcomponents.js" und "swissunihockey-webcomponents.css" in das Dateiverzeichniss vom Webserver hochladen. Diese beiden Dateien befinden sich direkt in diesem Projekt.
-Der Ordner, wo die Dateien hochgeladen werden, muss von den Webseiten anziehbar sein.
-Als Beispiel kann man in einer Wordpress Webseite die beiden Dateien in der Mediathek hochladen.
-![img.png](img.png)
-Man muss unter "Medien" auf "Mediathek" gehen und dann kann man dort die Dateien hineinziehen.
-Nun muss man auf die beiden hochgeladenen Dateien in der Mediathek klicken und bei beiden die Datei-URL kopieren, wie man auf dem unteren Bild sieht.
-![img_1.png](img_1.png)
+# Einbetten der Web Component auf einer Webseite
+**1.	Dateien auf Website/Webserver hochladen (JavaScript und CSS files)**
 
-Nun kann man auf einer Seite folgender HTML Code einbetten.
-Wichtig bei href muss man die Datei-URL vom CSS-File und bei src die Datei-URL vom JS-File reinkopieren.
+Sie haben zwei Dateien erhalten:
+-	eine **CSS-Datei** (für das Design)
+-	eine **JavaScript-Datei (JS)** (für die Funktionalität)
+
+Diese beiden Dateien müssen auf Ihre Webseite hochgeladen werden. Sie finden die Dateien in diesem Projekt mit den Namen "swissunihockey-webcomponents.css" und "swissunihockey-webcomponents.js".
+
+**Beispiel WordPress**
+1.	Melden Sie sich im WordPress-Backend an.
+2.	Öffnen Sie Medien → Mediathek.
+      ![img.png](img.png)
+3. Ziehen Sie die beiden Dateien per Drag & Drop in die Mediathek.
+4.	Öffnen Sie jede hochgeladene Datei.
+5.	Kopieren Sie die jeweilige Datei-URL und speichern Sie diese ab. Sie benötigen die URLs später.
+      ![img_1.png](img_1.png)
+
+
+**2.	Web Components auf der Webseite aktivieren**
+
+Bevor Sie Spielpläne, Ranglisten oder andere Inhalte anzeigen können, müssen Sie folgenden Code einmal auf der gewünschten Seite einfügen:
 ```js
 <link
   rel="stylesheet"
   href="PATH_TO_CSS_FILE">
-<p><script
+<script
   type="module"
-  src="PATH_TO_JS_FILE"><br />
-</script></p>
+  src="PATH_TO_JS_FILE">
+</script>
 ```
-Nun kann man auf der Webseite die Blöcke hinzufügen.
-Für jedes Team von deinem Verein kannst du die Informationen, welche du für die Blöcke im HTML Code benötigst auf dieser Webseite nachschauen: https://www.swissunihockey.ch/de/administration/services/vereins-ids-finder-fuer-web-component/
-Hier findest du die TeamID, LeagueID, GameClassID und die Gruppe, welche für verschiedene Blöcke gebraucht werden.
-Es gibt folgende Blöcke die man einbinden kann.
+Ersetzen Sie:
+- URL_ZUR_CSS_DATEI durch die kopierte URL der CSS-Datei
+- URL_ZUR_JS_DATEI durch die kopierte URL der JavaScript-Datei
 
-## Ligaspiele
+**3.	Benötigte IDs finden**
+
+Für viele Komponenten benötigen Sie Vereins-, Team- oder Liga-IDs.
+
+Diese finden Sie hier:
+https://www.swissunihockey.ch/de/administration/services/vereins-ids-finder-fuer-web-component/
+
+Dort erhalten Sie unter anderem:
+- Club-ID
+- Team-ID
+- League-ID
+- GameClass-ID
+- Gruppenname
+
+**4.	Verfügbare Web Components auf Seiten einbetten**
+
+Nun kann man auf einzelnen Seiten die Web-Component-Blöcke hinzufügen. Für jedes Web Component benötigst du die IDs aus Punkt 3.
+
+1. **Ligaspiele anzeigen**
+
+
+Zeigt die Spiele einer bestimmten Liga und Gruppe an.
+
+**<u>Vorlage</u>**
 ```js
 <uniho-league-games 
     game-class="CLASS_ID" 
@@ -33,8 +65,7 @@ Es gibt folgende Blöcke die man einbinden kann.
     group="Group_Name">
 <uniho-league-games>
 ```
-Hier musst du auf der Webseite (https://www.swissunihockey.ch/de/administration/services/vereins-ids-finder-fuer-web-component/) schauen welche GameClassID, LeagueID und Group du benötigst.
-Der Block sollte dann wie folgt aussehen:
+**<u>Beispiel</u>**
 ```js
 <uniho-league-games
     game-class="21"
@@ -43,9 +74,15 @@ Der Block sollte dann wie folgt aussehen:
     group="Gruppe 1">
 </uniho-league-games>
 ```
+**Wichtig:** Bei der Saison immer das Jahr angeben, in dem die Saison beginnt.
 ![img_2.png](img_2.png)
 
-## Teamspiele nach Verein
+2. **Teamspiele nach Verein**
+
+Zeigt sämtliche Teams eines Vereins in einer gemeinsamen Übersicht an.
+
+**<u>Vorlage</u>**
+
 ```js
 <uniho-club-team-games
     club-id="CLUB_ID"
@@ -53,10 +90,7 @@ Der Block sollte dann wie folgt aussehen:
     page-size="Anzahl Spiele pro Seite">
 </uniho-club-team-games>
 ```
-Mit diesem Block kann man in einem Fenster direkt alle Teamspiele für jedes Team eines Vereins anzeigen lassen.
-Bei diesem Block gibt es noch den Parameter "page-size". Dieser sagt aus, wie viele Spiele von einem Team auf einer Seite ersichtlich sein sollen.
-Zusätzlich ist wichtig, dass man bei season das Jahr angibt, in welchem die Saison gestartet ist. Also z.B. für die Saison 2026/2027 müsste man als Parameter 2026 angeben. 
-Der Block sollte dann wie folgt aussehen:
+**<u>Beispiel:</u>**
 ```js
 <uniho-club-team-games
     club-id="372"
@@ -64,9 +98,17 @@ Der Block sollte dann wie folgt aussehen:
     page-size="6">
 </uniho-club-team-games>
 ```
+**Erklärung**
+- **club-id** = Vereins-ID
+- **season** = Startjahr der Saison
+- **page-size** = Anzahl Spiele pro Seite
+
 ![img_3.png](img_3.png)
 
-## Teamspiele
+3. **Spiele eines einzelnen Teams anzeigen**
+
+**<u>Vorlage</u>**
+
 ```js
 <uniho-team-games
     season="Jahr in dem die Saison beginnt"
@@ -74,8 +116,7 @@ Der Block sollte dann wie folgt aussehen:
     page-size="Anzahl Spiele pro Seite">
 </uniho-team-games>
 ```
-Mit diesem Block kann man nur die Spiele von einem spezifischen Team angeben. Auch hier sagt der Parameter "page-size" aus, wie viele Spiele auf einer Seite angezeigt werden sollen.
-Dieser Block sollte wie folgt aussehen:
+**<u>Beispiel</u>**
 ```js
 <uniho-team-games
     season="2025"
@@ -83,17 +124,24 @@ Dieser Block sollte wie folgt aussehen:
     page-size="5">
 </uniho-team-games>
 ```
+**Erklärung**
+- **team-id** = Team-ID
+- **page-size** = Anzahl Spiele pro Seite
+
 ![img_4.png](img_4.png)
 
-## Vereinsspiele
+4. **Vereinsspiele anzeigen**
+
+Zeigt die Spiele eines Vereins wochenweise an.
+
+**<u>Vorlage</u>**
 ```js
 <uniho-club-games
     season="Jahr in dem die Saison beginnt"
     club-id="CLUB_ID">
 </uniho-club-games>
 ```
-In diesem Block werden alle Spiele von einem Club pro Woche angezeigt.
-So sieht dies dann aus:
+**<u>Beispiel</u>**
 ```js
 <uniho-club-games
     season="2025"
@@ -102,7 +150,11 @@ So sieht dies dann aus:
 ```
 ![img_5.png](img_5.png)
 
-## Rangliste
+5. **Rangliste anzeigen**
+
+Zeigt die aktuelle Rangliste einer Liga oder Gruppe an.
+
+**<u>Vorlage</u>**
 ```js
 <uniho-ranking
     season="Jahr in dem die Saison beginnt"
@@ -111,7 +163,7 @@ So sieht dies dann aus:
     group="Group_Name">
 </uniho-ranking>
 ```
-Hier wird die Rangliste einer Gruppe angezeigt, dies sieht dann wie folgt aus:
+**<u>Beispiel</u>**
 ```js
 <uniho-ranking
     season="2025"
@@ -122,15 +174,18 @@ Hier wird die Rangliste einer Gruppe angezeigt, dies sieht dann wie folgt aus:
 ```
 ![img_6.png](img_6.png)
 
-## Mobiliar Topscorer
+6. **Mobiliar Topscorer anzeigen**
+
+Für Vereine, die ihre Mobiliar Topscorer auf der Webseite präsentieren möchten.
+
+**<u>Vorlage</u>**
 ```js
 <uniho-mobiliar-topscorer
     season="Jahr in dem die Saison beginnt"
     club-id="CLUB_ID">
 </uniho-mobiliar-topscorer>
 ```
-Für die Vereine, welche einen Mobiliar Topscorer auf ihrer Webseite anzeigen müssen, können sie dies mit diesem Block.
-Dies sieht dann wie folgt aus:
+**<u>Beispiel</u>**
 ```js
 <uniho-mobiliar-topscorer
     season="2025"
