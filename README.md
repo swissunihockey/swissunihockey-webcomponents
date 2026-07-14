@@ -51,7 +51,7 @@ Dort erhalten Sie unter anderem:
 
 Nun kann man auf einzelnen Seiten die Web-Component-Blöcke hinzufügen. Für jedes Web Component benötigst du die IDs aus Punkt 3.
 
-**1. Ligaspiele anzeigen**
+**A. Ligaspiele anzeigen**
 
 
 Zeigt die Spiele einer bestimmten Liga und Gruppe an.
@@ -77,7 +77,7 @@ Zeigt die Spiele einer bestimmten Liga und Gruppe an.
 **Wichtig:** Bei der Saison immer das Jahr angeben, in dem die Saison beginnt.
 ![img_2.png](img_2.png)
 
-**2. Teamspiele nach Verein**
+**B. Teamspiele nach Verein**
 
 Zeigt sämtliche Teams eines Vereins in einer gemeinsamen Übersicht an.
 
@@ -105,7 +105,7 @@ Zeigt sämtliche Teams eines Vereins in einer gemeinsamen Übersicht an.
 
 ![img_3.png](img_3.png)
 
-**3. Spiele eines einzelnen Teams anzeigen**
+**C. Spiele eines einzelnen Teams anzeigen**
 
 **<u>Vorlage</u>**
 
@@ -130,7 +130,7 @@ Zeigt sämtliche Teams eines Vereins in einer gemeinsamen Übersicht an.
 
 ![img_4.png](img_4.png)
 
-**4. Vereinsspiele anzeigen**
+**D. Vereinsspiele anzeigen**
 
 Zeigt die Spiele eines Vereins wochenweise an.
 
@@ -150,7 +150,7 @@ Zeigt die Spiele eines Vereins wochenweise an.
 ```
 ![img_5.png](img_5.png)
 
-**5. Rangliste anzeigen**
+**E. Rangliste anzeigen**
 
 Zeigt die aktuelle Rangliste einer Liga oder Gruppe an.
 
@@ -174,7 +174,7 @@ Zeigt die aktuelle Rangliste einer Liga oder Gruppe an.
 ```
 ![img_6.png](img_6.png)
 
-**6. Mobiliar Topscorer anzeigen**
+**F. Mobiliar Topscorer anzeigen**
 
 Für Vereine, die ihre Mobiliar Topscorer auf der Webseite präsentieren möchten.
 
