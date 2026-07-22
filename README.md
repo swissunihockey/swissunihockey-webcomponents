@@ -1,5 +1,24 @@
 # Einbetten der Web Component auf einer Webseite
-**1.	Dateien auf Website/Webserver hochladen (JavaScript und CSS files)**
+
+<br>
+
+## Inhaltsverzeichnis
+1. Dateien auf Website/Webserver hochladen (JavaScript- und CSS-Dateien)
+2. Web Components auf der Webseite aktivieren
+3. Benötigte IDs finden
+4. Verfügbare Web Components auf Seiten einbetten
+    - A. Ligaspiele anzeigen
+    - B. Teamspiele nach Verein
+    - C. Spiele eines einzelnen Teams anzeigen
+    - D. Vereinsspiele anzeigen
+    - E. Rangliste anzeigen
+    - F. Mobiliar Topscorer anzeigen
+<br>
+<br>
+<br>
+
+
+## **1.	Dateien auf Website/Webserver hochladen (JavaScript und CSS files)**
 
 Sie haben zwei Dateien erhalten:
 -	eine **CSS-Datei** (für das Design)
@@ -16,8 +35,10 @@ Diese beiden Dateien müssen auf Ihre Webseite hochgeladen werden. Sie finden di
 5.	Kopieren Sie die jeweilige Datei-URL und speichern Sie diese ab. Sie benötigen die URLs später.
       ![img_1.png](img_1.png)
 
+<br>
+<br>
 
-**2.	Web Components auf der Webseite aktivieren**
+## **2.	Web Components auf der Webseite aktivieren**
 
 Bevor Sie Spielpläne, Ranglisten oder andere Inhalte anzeigen können, müssen Sie folgenden Code einmal auf der gewünschten Seite einfügen:
 ```js
@@ -33,7 +54,10 @@ Ersetzen Sie:
 - URL_ZUR_CSS_DATEI durch die kopierte URL der CSS-Datei
 - URL_ZUR_JS_DATEI durch die kopierte URL der JavaScript-Datei
 
-**3.	Benötigte IDs finden**
+<br>
+<br>
+
+## **3.	Benötigte IDs finden**
 
 Für viele Komponenten benötigen Sie Vereins-, Team- oder Liga-IDs.
 
@@ -47,11 +71,17 @@ Dort erhalten Sie unter anderem:
 - GameClass-ID
 - Gruppenname
 
-**4.	Verfügbare Web Components auf Seiten einbetten**
+<br>
+<br>
+
+## **4.	Verfügbare Web Components auf Seiten einbetten**
 
 Nun kann man auf einzelnen Seiten die Web-Component-Blöcke hinzufügen. Für jedes Web Component benötigst du die IDs aus Punkt 3.
 
-**A. Ligaspiele anzeigen**
+<br>
+<br>
+
+### **A. Ligaspiele anzeigen**
 
 
 Zeigt die Spiele einer bestimmten Liga und Gruppe an.
@@ -77,7 +107,10 @@ Zeigt die Spiele einer bestimmten Liga und Gruppe an.
 **Wichtig:** Bei der Saison immer das Jahr angeben, in dem die Saison beginnt.
 ![img_2.png](img_2.png)
 
-**B. Teamspiele nach Verein**
+<br>
+<br>
+
+### **B. Teamspiele nach Verein**
 
 Zeigt sämtliche Teams eines Vereins in einer gemeinsamen Übersicht an.
 
@@ -105,7 +138,10 @@ Zeigt sämtliche Teams eines Vereins in einer gemeinsamen Übersicht an.
 
 ![img_3.png](img_3.png)
 
-**C. Spiele eines einzelnen Teams anzeigen**
+<br>
+<br>
+
+### **C. Spiele eines einzelnen Teams anzeigen**
 
 **<u>Vorlage</u>**
 
@@ -130,7 +166,10 @@ Zeigt sämtliche Teams eines Vereins in einer gemeinsamen Übersicht an.
 
 ![img_4.png](img_4.png)
 
-**D. Vereinsspiele anzeigen**
+<br>
+<br>
+
+### **D. Vereinsspiele anzeigen**
 
 Zeigt die Spiele eines Vereins wochenweise an.
 
@@ -150,7 +189,10 @@ Zeigt die Spiele eines Vereins wochenweise an.
 ```
 ![img_5.png](img_5.png)
 
-**E. Rangliste anzeigen**
+<br>
+<br>
+
+### **E. Rangliste anzeigen**
 
 Zeigt die aktuelle Rangliste einer Liga oder Gruppe an.
 
@@ -174,7 +216,10 @@ Zeigt die aktuelle Rangliste einer Liga oder Gruppe an.
 ```
 ![img_6.png](img_6.png)
 
-**F. Mobiliar Topscorer anzeigen**
+<br>
+<br>
+
+### **F. Mobiliar Topscorer anzeigen**
 
 Für Vereine, die ihre Mobiliar Topscorer auf der Webseite präsentieren möchten.
 
