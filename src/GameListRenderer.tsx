@@ -21,23 +21,98 @@ function getCellValue(cell: any): string {
 }
 
 function getGameDate(row: SwissRow): Date | undefined {
-    const text = getCellText(row)
+    const text = getCellText(row).trim()
+    const normalizedText = text.toLowerCase()
 
+    // "heute" -> aktuelles Datum
+    if (normalizedText.includes('heute')) {
+        const today = new Date()
+        today.setHours(0, 0, 0, 0)
+        return today
+    }
+
+    // "gestern" -> gestriges Datum
+    if (normalizedText.includes('gestern')) {
+        const yesterday = new Date()
+        yesterday.setDate(yesterday.getDate() - 1)
+        yesterday.setHours(0, 0, 0, 0)
+        return yesterday
+    }
+
+    // Schweizer Datumsformat: 24.09.2026 oder 24.09.26
     const swissDate = text.match(/(\d{1,2})\.(\d{1,2})\.(\d{2,4})/)
     if (swissDate) {
         const day = Number(swissDate[1])
         const month = Number(swissDate[2])
         let year = Number(swissDate[3])
+
         if (year < 100) year += 2000
+
         return new Date(year, month - 1, day)
     }
 
+    // ISO-Datumsformat: 2026-09-24
     const isoDate = text.match(/(\d{4})-(\d{2})-(\d{2})/)
     if (isoDate) {
-        return new Date(Number(isoDate[1]), Number(isoDate[2]) - 1, Number(isoDate[3]))
+        return new Date(
+            Number(isoDate[1]),
+            Number(isoDate[2]) - 1,
+            Number(isoDate[3]),
+        )
     }
 
     return undefined
+}
+
+function normalizeRelativeDateForDisplay(row: SwissRow): SwissRow {
+    if (!row.cells?.length) {
+        return row
+    }
+
+    const firstCell = row.cells[0]
+    const originalText = String(firstCell.text ?? firstCell.value ?? '').trim()
+
+    if (!originalText) {
+        return row
+    }
+
+    const normalizedText = originalText.toLowerCase()
+
+    let date: Date | undefined
+
+    if (normalizedText.includes('heute')) {
+        date = new Date()
+    } else if (normalizedText.includes('gestern')) {
+        date = new Date()
+        date.setDate(date.getDate() - 1)
+    }
+
+    if (!date) {
+        return row
+    }
+
+    const formattedDate =
+        `${String(date.getDate()).padStart(2, '0')}.` +
+        `${String(date.getMonth() + 1).padStart(2, '0')}.` +
+        `${date.getFullYear()}`
+
+    const newText = originalText
+        .replace(/heute/i, formattedDate)
+        .replace(/gestern/i, formattedDate)
+
+    return {
+        ...row,
+        cells: row.cells.map((cell, index) => {
+            if (index !== 0) {
+                return cell
+            }
+
+            return {
+                ...cell,
+                text: newText,
+            }
+        }),
+    }
 }
 
 function startOfWeek(date: Date) {
@@ -136,7 +211,9 @@ export function ClubGamesWeekRenderer({ data }: { data?: SwissTableResponse }) {
 
         return cloneTableWithRows(
             data,
-            rows.map(withoutHighlights),
+            rows.map((row) =>
+                normalizeRelativeDateForDisplay(withoutHighlights(row))
+            ),
             data.title ?? 'Clubspiele',
         )
     }, [data, rows, weekStart, weekEnd])
