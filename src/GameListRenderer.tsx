@@ -82,6 +82,7 @@ function normalizeRelativeDateForDisplay(row: SwissRow): SwissRow {
     }
 
     const firstCell = row.cells[0]
+
     const originalText = valueToText(
         firstCell.text ?? firstCell.value ?? ''
     ).trim()
@@ -116,16 +117,14 @@ function normalizeRelativeDateForDisplay(row: SwissRow): SwissRow {
 
     return {
         ...row,
-        cells: row.cells.map((cell, index) => {
-            if (index !== 0) {
-                return cell
-            }
-
-            return {
-                ...cell,
-                text: newText,
-            }
-        }),
+        cells: row.cells.map((cell, index) =>
+            index === 0
+                ? {
+                    ...cell,
+                    text: newText,
+                }
+                : cell
+        ),
     }
 }
 
