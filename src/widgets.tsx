@@ -292,7 +292,10 @@ export function UnihoRanking(props: RankingProps) {
 
   return (
       <WidgetShell title="Rangliste" error={error} loading={!data}>
-        <TableRenderer data={data} />
+          <TableRenderer
+              data={data}
+              className="su-mobile-ranking"
+          />
       </WidgetShell>
   )
 }

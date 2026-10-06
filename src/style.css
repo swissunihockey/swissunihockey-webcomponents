@@ -542,3 +542,81 @@
 .su-playoff-group .su-table-wrap {
   border: 0;
 }
+
+/* =========================================================
+   Mobile Tabellen
+   Desktop bleibt vollständig unverändert.
+   ========================================================= */
+
+@media (max-width: 700px) {
+
+  /* Etwas mehr Platz für die eigentlichen Daten */
+  .su-card {
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+
+  .su-table-wrap {
+    overflow-x: auto;
+  }
+
+  .su-widget table {
+    font-size: 12px;
+  }
+
+  .su-widget th,
+  .su-widget td {
+    padding: 7px 5px;
+  }
+
+
+  /* =======================================================
+     CLUBSPIELE / TEAMSPIELE
+     Ort ausblenden
+     ======================================================= */
+
+  .su-mobile-club-games th:nth-child(6),
+  .su-mobile-club-games td:nth-child(6),
+  .su-mobile-team-games th:nth-child(6),
+  .su-mobile-team-games td:nth-child(6) {
+    display: none;
+  }
+
+
+  /* =======================================================
+     LIGASPIELE
+     Logo-Spalten ausblenden
+     ======================================================= */
+
+  .su-mobile-league-games th:nth-child(2),
+  .su-mobile-league-games td:nth-child(2),
+  .su-mobile-league-games th:nth-child(5),
+  .su-mobile-league-games td:nth-child(5) {
+    display: none;
+  }
+
+
+  /* =======================================================
+     RANGLISTE
+
+     Mobile sichtbar:
+     Rg. | Logo | Team | Sp | S | SnV | NnV | N | T | PQ | P
+     ======================================================= */
+
+  .su-mobile-ranking th,
+  .su-mobile-ranking td {
+    padding-left: 4px;
+    padding-right: 4px;
+    white-space: nowrap;
+  }
+
+  .su-mobile-ranking .su-club-logo {
+    width: 24px;
+    height: 24px;
+  }
+
+  .su-mobile-ranking .su-logo-cell {
+    min-width: 26px;
+    min-height: 26px;
+  }
+}

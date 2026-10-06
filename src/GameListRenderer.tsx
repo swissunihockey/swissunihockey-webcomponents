@@ -2,9 +2,21 @@ import { useMemo, useState } from 'react'
 import { TableRenderer } from './TableRenderer'
 import type { SwissRow, SwissTableResponse } from './types'
 
+function valueToText(value: unknown): string {
+    if (Array.isArray(value)) {
+        return value.map(String).join(' ')
+    }
+
+    if (value == null) {
+        return ''
+    }
+
+    return String(value)
+}
+
 function getCellText(row: SwissRow): string {
     return row.cells
-        ?.map((cell) => String(cell.text ?? cell.value ?? ''))
+        ?.map((cell) => valueToText(cell.text ?? cell.value ?? ''))
         .join(' ') ?? ''
 }
 
@@ -70,7 +82,9 @@ function normalizeRelativeDateForDisplay(row: SwissRow): SwissRow {
     }
 
     const firstCell = row.cells[0]
-    const originalText = String(firstCell.text ?? firstCell.value ?? '').trim()
+    const originalText = valueToText(
+        firstCell.text ?? firstCell.value ?? ''
+    ).trim()
 
     if (!originalText) {
         return row
@@ -234,7 +248,11 @@ export function ClubGamesWeekRenderer({ data }: { data?: SwissTableResponse }) {
                 </button>
             </div>
 
-            <TableRenderer data={tableData} emptyText="Keine Spiele in dieser Woche gefunden." />
+            <TableRenderer
+                data={tableData}
+                emptyText="Keine Spiele in dieser Woche gefunden."
+                className="su-mobile-club-games"
+            />
         </div>
     )
 }
@@ -279,7 +297,9 @@ export function TeamGamesPagerRenderer({
 
         return cloneTableWithRows(
             data,
-            visibleRows.map(withoutHighlights),
+            visibleRows.map((row) =>
+                normalizeRelativeDateForDisplay(withoutHighlights(row))
+            ),
             data.title ?? 'Teamspiele',
         )
     }, [data, visibleRows, safePageStart, pageSize, sortedRows.length])
@@ -313,6 +333,7 @@ export function TeamGamesPagerRenderer({
                 data={tableData}
                 emptyText="Keine Teamspiele gefunden."
                 showTitle={showTitle}
+                className="su-mobile-team-games"
             />
         </div>
     )
@@ -377,10 +398,21 @@ export function PlayoffGamesAccordionRenderer({
     const groups = useMemo(() => buildPlayoffPairGroups(data), [data])
 
     if (!data || groups.length === 0) {
+        const normalizedData = data
+            ? cloneTableWithRows(
+                data,
+                flattenRows(data).map((row) =>
+                    normalizeRelativeDateForDisplay(withoutHighlights(row))
+                ),
+                data.title,
+            )
+            : data
+
         return (
             <TableRenderer
-                data={data}
+                data={normalizedData}
                 emptyText="Keine Spiele gefunden."
+                className="su-mobile-league-games"
             />
         )
     }
@@ -399,9 +431,16 @@ export function PlayoffGamesAccordionRenderer({
                         </summary>
 
                         <TableRenderer
-                            data={cloneTableWithRows(data, group.rows.map(withoutHighlights), undefined)}
+                            data={cloneTableWithRows(
+                                data,
+                                group.rows.map((row) =>
+                                    normalizeRelativeDateForDisplay(withoutHighlights(row))
+                                ),
+                                undefined
+                            )}
                             emptyText="Keine Spiele gefunden."
                             showTitle={false}
+                            className="su-mobile-league-games"
                         />
                     </details>
                 ))}

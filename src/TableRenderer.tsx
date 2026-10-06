@@ -225,10 +225,12 @@ export function TableRenderer({
                                 data,
                                 emptyText = 'Keine Daten gefunden.',
                                 showTitle = true,
+                                className = '',
                               }: {
   data?: SwissTableResponse
   emptyText?: string
   showTitle?: boolean
+  className?: string
 }) {
   if (!data) return <p className="su-empty">{emptyText}</p>
 
@@ -237,7 +239,7 @@ export function TableRenderer({
   const isAttributeList = data.subtype === 'attribute_list'
 
   return (
-      <section className="su-card">
+      <section className={`su-card ${className}`.trim()}>
         {showTitle && (data.title || data.text) && <h3>{String(data.title || data.text)}</h3>}
         {data.subtitle && <p className="su-subtitle">{data.subtitle}</p>}
 
