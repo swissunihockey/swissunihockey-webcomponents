@@ -575,8 +575,10 @@
      Ort ausblenden
      ======================================================= */
 
-  .su-mobile-club-games th:nth-child(6),
-  .su-mobile-club-games td:nth-child(6),
+  .su-mobile-club-games th:nth-child(2),
+  .su-mobile-club-games td:nth-child(2) {
+    display: none;
+  }
   .su-mobile-team-games th:nth-child(6),
   .su-mobile-team-games td:nth-child(6) {
     display: none;
