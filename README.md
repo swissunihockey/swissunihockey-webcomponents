@@ -1,5 +1,7 @@
 # Einbetten der Web Component auf einer Webseite
 
+> **Hinweis für WordPress:** Für WordPress gibt es auch das Plugin [Swiss Floorball API](https://wordpress.org/plugins/swiss-floorball-api/), mit dem Sie Spielpläne, Ranglisten und weitere Inhalte der Swiss Unihockey API direkt in Ihre Webseite einbinden können.
+
 <br>
 
 ## Inhaltsverzeichnis
