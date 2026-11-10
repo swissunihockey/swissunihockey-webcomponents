@@ -247,3 +247,107 @@ export function useSwissPaginatedTable(
 
   return { data, error }
 }
+
+export type TeamAssignment = {
+  league?: string
+  gameClass?: string
+  group?: string
+}
+
+type TeamAssignmentState = {
+  key: string
+  assignment?: TeamAssignment
+  error?: string
+}
+
+export function useTeamAssignment(
+    teamId?: string,
+    season?: string,
+    enabled = true,
+) {
+  const key = JSON.stringify([teamId, season])
+  const [state, setState] = useState<TeamAssignmentState>({
+    key: '',
+  })
+
+  useEffect(() => {
+    if (!enabled || !teamId) return
+
+    const controller = new AbortController()
+
+    const url = buildSwissApiUrl('/games', {
+      mode: 'team',
+      team_id: teamId,
+      season,
+    })
+
+    fetch(url.toString(), {
+      signal: controller.signal,
+      headers: { Accept: 'application/json' },
+    })
+        .then(response => {
+          if (!response.ok) {
+            throw new Error(
+                `Swiss Unihockey API Fehler ${response.status}`
+            )
+          }
+          return response.json()
+        })
+        .then(json => {
+          const data = json.data ?? json
+
+          const tabs = Array.isArray(data.tabs)
+              ? data.tabs
+              : []
+
+          const matchingTab = tabs.find((tab: any) => {
+            const link = tab?.link
+            const ids = link?.ids
+
+            return (
+                link?.page === 'league_group_detail' &&
+                Array.isArray(ids) &&
+                ids.length >= 3 &&
+                (!season || String(ids[0]) === String(season))
+            )
+          })
+
+          if (!matchingTab) {
+            throw new Error(
+                'Keine Liga- und Spielklassenzuordnung für dieses Team gefunden.'
+            )
+          }
+
+          const ids = matchingTab.link.ids
+
+          const assignment: TeamAssignment = {
+            league: String(ids[1]),
+            gameClass: String(ids[2]),
+            group:
+                ids[3] !== undefined && ids[3] !== null
+                    ? String(ids[3])
+                    : undefined,
+          }
+
+          setState({ key, assignment })
+        })
+        .catch((err: Error) => {
+          if (err.name !== 'AbortError') {
+            setState({ key, error: err.message })
+          }
+        })
+
+    return () => controller.abort()
+  }, [key, enabled])
+
+  const current = state.key === key ? state : undefined
+
+  return {
+    assignment: enabled && teamId
+        ? current?.assignment
+        : undefined,
+    loading: !!enabled && !!teamId &&
+        !current?.assignment && !current?.error,
+    error: enabled && teamId ? current?.error : undefined,
+  }
+}

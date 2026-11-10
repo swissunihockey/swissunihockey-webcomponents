@@ -32,6 +32,7 @@ registerReactWebComponent('uniho-team-games', UnihoTeamGames, {
 })
 
 registerReactWebComponent('uniho-league-games', UnihoLeagueGames, {
+  teamId: 'string',
   gameClass: 'string',
   league: 'string',
   season: 'string',

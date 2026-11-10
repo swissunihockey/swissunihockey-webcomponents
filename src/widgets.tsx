@@ -1,6 +1,10 @@
 import { TableRenderer } from './TableRenderer'
 import { ClubGamesWeekRenderer, PlayoffGamesAccordionRenderer, TeamGamesPagerRenderer } from './GameListRenderer'
-import { useSwissData, useSwissPaginatedTable } from './hooks'
+import {
+    useSwissData,
+    useSwissPaginatedTable,
+    useTeamAssignment,
+} from './hooks'
 import type { SwissTableResponse } from './types'
 import { MobiliarTopscorerRenderer } from './MobiliarTopscorerRenderer'
 import { useMemo, useState } from 'react'
@@ -171,18 +175,39 @@ export function UnihoTeamGames(props: {
 }
 
 export function UnihoLeagueGames(props: {
+    teamId?: string
     gameClass?: string
     league?: string
     season?: string
     group?: string
 }) {
-    const enabled = !!props.gameClass && !!props.league
+    // Teamzuordnung nur laden, wenn notwendige Werte fehlen
+    const needsAssignment =
+        !!props.teamId &&
+        (!props.gameClass || !props.league || !props.group)
+
+    const {
+        assignment,
+        loading: teamLoading,
+        error: teamError,
+    } = useTeamAssignment(
+        props.teamId,
+        props.season,
+        needsAssignment,
+    )
+
+    // Explizite Attribute haben immer Vorrang
+    const gameClass = props.gameClass || assignment?.gameClass
+    const league = props.league || assignment?.league
+    const group = props.group || assignment?.group
+
+    const enabled = !!gameClass && !!league
 
     const baseKey = JSON.stringify([
-        props.gameClass,
-        props.league,
+        gameClass,
+        league,
         props.season,
-        props.group,
+        group,
     ])
 
     const [navigation, setNavigation] = useState<{
@@ -193,25 +218,32 @@ export function UnihoLeagueGames(props: {
         params: {},
     })
 
-    const contextParams = navigation.baseKey === baseKey ? navigation.params : {}
+    const contextParams =
+        navigation.baseKey === baseKey
+            ? navigation.params
+            : {}
 
+    // Bestehende API-Abfrage beibehalten
     const { data, error } = useSwissData<SwissTableResponse>(
         '/games',
         {
             mode: 'list',
-            game_class: props.gameClass,
-            league: props.league,
+            game_class: gameClass,
+            league: league,
             season: props.season,
-            group: props.group,
+            group: group,
             ...contextParams,
         },
         enabled,
     )
 
+    // Bestehende Tabellenbereinigung beibehalten
     const cleanedData = useMemo(() => {
         if (!data) return data
 
-        const lastHeader = data.headers?.[data.headers.length - 1]
+        const lastHeader =
+            data.headers?.[data.headers.length - 1]
+
         const removeLastColumn =
             lastHeader?.text === '📺'
 
@@ -230,36 +262,68 @@ export function UnihoLeagueGames(props: {
         }
     }, [data])
 
-    const prevParams = (data?.slider as any)?.prev?.set_in_context
-    const nextParams = (data?.slider as any)?.next?.set_in_context
-    const sliderText = (data?.slider as any)?.text
+    const prevParams =
+        (data?.slider as any)?.prev?.set_in_context
 
-    if (!props.gameClass || !props.league) {
+    const nextParams =
+        (data?.slider as any)?.next?.set_in_context
+
+    const sliderText =
+        (data?.slider as any)?.text
+
+    // Fehlende Liga/Spielklasse
+    if (!enabled) {
         return (
             <WidgetShell title="Ligaspiele">
-                <p className="su-error">Attribute game-class und league fehlen.</p>
+                {teamLoading ? (
+                    <p className="su-loading">
+                        Teamzuordnung wird geladen...
+                    </p>
+                ) : (
+                    <p className="su-error">
+                        {teamError ??
+                            'Attribute game-class und league fehlen oder konnten nicht ermittelt werden.'}
+                    </p>
+                )}
             </WidgetShell>
         )
     }
 
+    // Bestehende Navigation und Darstellung beibehalten
     return (
-        <WidgetShell title="Ligaspiele" error={error} loading={!data}>
+        <WidgetShell
+            title="Ligaspiele"
+            error={error}
+            loading={!data}
+        >
             <div>
                 <div className="su-controls">
                     <button
                         type="button"
                         disabled={!prevParams}
-                        onClick={() => setNavigation({ baseKey, params: prevParams })}
+                        onClick={() =>
+                            setNavigation({
+                                baseKey,
+                                params: prevParams,
+                            })
+                        }
                     >
                         ← Frühere Spiele
                     </button>
 
-                    <span>{sliderText ?? 'Aktuelle Runde'}</span>
+                    <span>
+                        {sliderText ?? 'Aktuelle Runde'}
+                    </span>
 
                     <button
                         type="button"
                         disabled={!nextParams}
-                        onClick={() => setNavigation({ baseKey, params: nextParams })}
+                        onClick={() =>
+                            setNavigation({
+                                baseKey,
+                                params: nextParams,
+                            })
+                        }
                     >
                         Weitere Spiele →
                     </button>
@@ -305,8 +369,6 @@ export function UnihoMobiliarTopscorer(props: {
     clubId?: string
     viewType?: string
 }) {
-    const enabled = !!props.clubId
-
     const { data, error } = useSwissData<SwissTableResponse>(
         '/topscorers/mobiliar-highlight',
         {
@@ -314,16 +376,7 @@ export function UnihoMobiliarTopscorer(props: {
             club_id: props.clubId,
             view_type: 'table',
         },
-        enabled,
     )
-
-    if (!props.clubId) {
-        return (
-            <WidgetShell title="Mobiliar Topscorer">
-                <p className="su-error">Attribut club-id fehlt.</p>
-            </WidgetShell>
-        )
-    }
 
     return (
         <WidgetShell title="" error={error} loading={!data}>

@@ -89,6 +89,23 @@ Zeigt die Spiele einer bestimmten Liga und Gruppe an.
 **<u>Vorlage</u>**
 ```js
 <uniho-league-games 
+    team-id="TEAM_ID"
+    season="Jahr in dem die Saison beginnt">
+<uniho-league-games>
+```
+**<u>Beispiel</u>**
+```js
+<uniho-league-games
+    team-id="429494"
+    season="2025">
+</uniho-league-games>
+```
+
+Oder
+
+**<u>Vorlage</u>**
+```js
+<uniho-league-games 
     game-class="CLASS_ID" 
     league="LEAGUE_ID"
     season="Jahr in dem die Saison beginnt"
@@ -195,6 +212,23 @@ Zeigt die Spiele eines Vereins wochenweise an.
 ### **E. Rangliste anzeigen**
 
 Zeigt die aktuelle Rangliste einer Liga oder Gruppe an.
+
+**<u>Vorlage</u>**
+```js
+<uniho-league-games 
+    team-id="TEAM_ID"
+    season="Jahr in dem die Saison beginnt">
+<uniho-league-games>
+```
+**<u>Beispiel</u>**
+```js
+<uniho-league-games
+    team-id="429494"
+    season="2025">
+</uniho-league-games>
+```
+
+Oder
 
 **<u>Vorlage</u>**
 ```js
