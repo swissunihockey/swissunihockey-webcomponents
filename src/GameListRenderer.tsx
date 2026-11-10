@@ -299,7 +299,7 @@ export function TeamGamesPagerRenderer({
             visibleRows.map((row) =>
                 normalizeRelativeDateForDisplay(withoutHighlights(row))
             ),
-            data.title ?? 'Teamspiele',
+            data.title?.replace(/\b([A-Z])Regional\b/g, '$1 Regional') ?? 'Teamspiele',
         )
     }, [data, visibleRows, safePageStart, pageSize, sortedRows.length])
 
