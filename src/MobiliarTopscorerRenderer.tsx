@@ -1,3 +1,4 @@
+import React from 'react'
 import type { SwissTableResponse } from './types'
 import topscorerLogo from './assets/topscorer-logo-de.png'
 

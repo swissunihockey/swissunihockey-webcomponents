@@ -7,7 +7,7 @@ import {
 } from './hooks'
 import type { SwissTableResponse } from './types'
 import { MobiliarTopscorerRenderer } from './MobiliarTopscorerRenderer'
-import { useMemo, useState } from 'react'
+import React, { useMemo, useState } from 'react'
 
 export function UnihoClubGames(props: { clubId?: string; season?: string }) {
     const enabled = !!props.clubId

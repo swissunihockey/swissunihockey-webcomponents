@@ -40,6 +40,7 @@ registerReactWebComponent('uniho-league-games', UnihoLeagueGames, {
 })
 
 registerReactWebComponent('uniho-ranking', UnihoRanking, {
+  teamId: 'string',
   season: 'string',
   league: 'string',
   gameClass: 'string',
@@ -54,6 +55,7 @@ registerReactWebComponent('uniho-mobiliar-topscorer', UnihoMobiliarTopscorer, {
 })
 
 registerReactWebComponent('uniho-teams', UnihoTeams, {
+  teamId: 'string',
   mode: 'string',
   season: 'string',
   clubId: 'string',
@@ -74,6 +76,7 @@ registerReactWebComponent('uniho-team-statistics', UnihoTeamStatistics, {
 })
 
 registerReactWebComponent('uniho-team-visitors', UnihoTeamVisitors, {
+  teamId: 'string',
   season: 'string',
   league: 'string',
   gameClass: 'string',

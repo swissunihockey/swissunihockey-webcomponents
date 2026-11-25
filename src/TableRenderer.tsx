@@ -1,3 +1,4 @@
+import React from 'react'
 import type { SwissCell, SwissDropdownEntry, SwissRow, SwissTableResponse } from './types'
 
 function normalizeText(value: unknown): string {

@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import React, { useMemo, useState } from 'react'
 import { TableRenderer } from './TableRenderer'
 import type { SwissRow, SwissTableResponse } from './types'
 
